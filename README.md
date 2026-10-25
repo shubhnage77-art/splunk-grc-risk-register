@@ -2,22 +2,14 @@ IT Services Co. GRC Monitoring Project(Splunk)
 A hands-on Governance, Risk and Compliance (GRC) project built in Splunk Enterprise. Itanalyses simulated authentication logs for a fictional company, identifies control failures,scores them in a risk register, and presents them on a dashboard.
 All names, IP addresses and events in this project are fictional.
 1. Project Overview
-Company (fictional):
-IT Services Co.
-Tool:
-Splunk Enterprise 10.x (local install)
-Data source:
-IT_Services_Co_Logs.csv
-- simulated authentication logs, 180 events,October 2026
-Splunk index:
-it_services_co
-Fields:
-timestamp, username, role, employee_status, source_ip, login_result, mfa_used,system
-Objective:
-detect identity and access risks from log data, rate them, and recommendmitigations mapped to NIST CSF 2.0 and ISO/IEC 27001:2022.
+Company (fictional): IT Services Co.
+Tool:Splunk Enterprise 10.x (local install)
+Data source: IT_Services_Co_Logs.csv - simulated authentication logs, 180 events, October 2026
+Splunk index:it_services_co
+Fields:timestamp, username, role, employee_status, source_ip, login_result, mfa_used,system
+Objective:detect identity and access risks from log data, rate them, and recommendmitigations mapped to NIST CSF 2.0 and ISO/IEC 27001:2022.
 2. Key Results
-MFA control test:
-FAILED
+MFA control test:FAILED
 (3 of 10 active accounts, 30% failure rate).
 Rating
 Count
@@ -31,9 +23,9 @@ Low
 0
 Splunk GRC Project - README and Finding Write-ups
 Page 1 of 6
-3. Findings Summary
+4. Findings Summary
 Risk score = Likelihood x Impact (each 1-5). Low: 1-4, Medium: 5-9, High: 10-16, Critical: 17-25.
-4. Splunk Searches Used
+5. Splunk Searches Used
 Finding 1 - Terminated employee logins
 index=it_services_co employee_status=Terminated login_result=SUCCESS
 Finding 2 - Failed login burst
@@ -69,7 +61,6 @@ Medium
 CT-01
 MFA control test
 Failed
--
 3 of 10 active accounts non-compliant
 Splunk GRC Project - README and Finding Write-ups
 Page 2 of 6
@@ -78,13 +69,12 @@ Finding 5 - MFA control test
 index=it_services_co employee_status=Active login_result=SUCCESS | stats count by username, mfa_used
 Retest (pass = zero results)
 index=it_services_co employee_status=Active login_result=SUCCESS mfa_used=No | stats count by username
-5. Dashboard
-The
-IT Services Co GRC Dashboard
+6. Dashboard
+The IT Services Co GRC Dashboard
 gives a single view of authentication activity, failedlogins, MFA usage and potential security incidents. See
 /dashboard/
 for the screenshotand PDF export.
-6. Detailed Finding Write-ups
+7. Detailed Finding Write-ups
 R-01 - Terminated employees retain active access (Critical)
 Risk:
 Former employees can still reach company systems, which risks data theft orunauthorised changes.
@@ -148,15 +138,14 @@ Splunk GRC Project - README and Finding Write-ups
 Page 4 of 6
 Retest criteria:
 The retest search must return zero accounts, otherwise the findingstays open.
-7. Repository Structure
+8. Repository Structure
 splunk-grc-risk-register/ README.md data/IT_Services_Co_Logs.csv risk-register/it_services_co_risk_register.xlsx screenshots/ finding01_terminated_user_access.png finding02_failed_login_burst.png finding03_no_mfa_accounts.png finding04_after_hours_logins.png finding05_mfa_control_test.png dashboard/ grc_dashboard.png grc_dashboard.pdf searches/splunk_searches.txt
-8. How to Reproduce
+9. How to Reproduce
 1.
 Install Splunk Enterprise (free trial) locally.
 2.
 Create an index named
 it_services_co
-.
 3.
 Upload
 IT_Services_Co_Logs.csv
